@@ -4,6 +4,7 @@ from discord.ext import commands
 import random
 import math
 import requests
+
 def rev(pixel):
     return math.ceil(math.sin(pixel / 100) * 100 + math.sin(pixel) * 100)
 
@@ -47,8 +48,25 @@ async def gens(ctx):
     await ctx.channel.send(file=discord.File('myimg.jpg'))
 
 @bot.command()
+async def genrepeat(ctx, arg):
+    try:
+        if int(arg) > 100 or int(arg) < 1:
+            raise
+        crt = open("myimg.jpg", "wb")
+        crt.write(requests.get(ctx.message.attachments[0].url).content)
+        crt.close()
+        for i in range(int(arg)):
+            myimg = Image.open("myimg.jpg").convert('RGB')
+            myimg_supreme = myimg.point(rev)
+            myimg_supreme.save("myimg.jpg")
+        await ctx.channel.send(file=discord.File('myimg.jpg'))
+    except:
+        await ctx.channel.send("Something went wrong, please check your arguments.")
+
+
+@bot.command()
 async def sunshineandkittens(ctx):
     generate("placekitten.com")
-    await ctx.channel.send(file=discord.File('myimg.jpg'))
+    await ctx.channel.send(file=discord.File('myimg.jpg"'))
 
 bot.run(open("token.txt", "r").read())
