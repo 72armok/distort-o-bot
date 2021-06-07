@@ -1,5 +1,6 @@
 from PIL import Image
 import discord
+from discord.embeds import Embed
 from discord.ext import commands
 import random
 import math
@@ -31,7 +32,12 @@ def genimg(urls:str):
     myimg_supreme = myimg.point(rev)
     myimg_supreme.save("myimg.jpg")
 
-bot = commands.Bot(command_prefix='!')
+bot = commands.Bot(command_prefix='dstrt@', help_command=None)
+
+@bot.event
+async def on_ready():
+    print("ONLINE")
+    await bot.change_presence(activity=discord.Game(name="Corrupted ROMs"))
 
 @bot.command()
 async def gen(msg):
@@ -63,10 +69,15 @@ async def genrepeat(ctx, arg):
     except:
         await ctx.channel.send("Something went wrong, please check your arguments.")
 
-
 @bot.command()
 async def sunshineandkittens(ctx):
     generate("placekitten.com")
-    await ctx.channel.send(file=discord.File('myimg.jpg"'))
+    await ctx.channel.send(file=discord.File('myimg.jpg'))
+
+@bot.command()
+async def help(ctx):
+    em = discord.Embed(title="**Booklet-In-One**")
+    em.add_field(name="Bot Commands", value="**dstrt@gen** : Generates a random image then corrupts it\n**dstrt@gens [ATTACH IMAGE]** : Corrupts a given image\n**dstrt@genrepeat [Repeat time]** : Distorts an image a repeated amount of time.\n**dstrt@sunshineandkittens** : Gives a corrupted image of a kitten\n")
+    await ctx.channel.send(embed=em)
 
 bot.run(open("token.txt", "r").read())
