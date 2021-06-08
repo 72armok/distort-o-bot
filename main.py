@@ -9,6 +9,7 @@ import requests
 import ctypes
 
 ctypes.windll.kernel32.SetConsoleTitleW("Distort-O-Bot")
+        
 
 def rev(pixel):
     return math.ceil(math.sin(pixel / 100) * 100 + math.sin(pixel) * 100)
@@ -144,7 +145,8 @@ async def help(ctx):
 
 @bot.command()
 async def invite(ctx):
-    em=discord.Embed(title="Invite Me To Other Servers!", url="https://discord.com/oauth2/authorize?client_id=851212703057444874&permissions=2147601408&scope=bot", description="It would be great for you to do so.", color=0x2d6476)
+    em=discord.Embed(title="Click Here To Invite Me To Other Servers", url="https://discord.com/oauth2/authorize?client_id=851212703057444874&permissions=2147601408&scope=bot", description="", color=0x2d6476)
+    em.set_thumbnail(url="https://i.imgur.com/XYAAQ6i.jpeg")
     await ctx.send(embed=em)
 
 @bot.command()
