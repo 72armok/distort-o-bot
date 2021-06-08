@@ -139,8 +139,25 @@ async def cat(ctx):
 @bot.command()
 async def help(ctx):
     em = discord.Embed(title="**Booklet-In-One**")
-    em.add_field(name="Bot Commands (1)", value="**dstrt@gen** : Generates a random image then corrupts it\n**dstrt@gens [ATTACH IMAGE]** : Corrupts a given image\n**dstrt@genrepeat [Repeat time]** : Distorts an image a repeated amount of time.\n**dstrt@cat** : Gives a corrupted image of a kitten\n**dstrt@mono** : Generates a random corrupted image in black and white.\n**dstrt@monoo** : Ditto, but with a couple of changes.\n**dstrt@invite** : Gives you an invite link to invite Distort-O-Bot wherever you want.\n")
-    em.add_field(name="Bot Commands (2)", value="**dstrt@pgen** Generates a random image then p-corrupts it: \n**dstrt@pgens** : p-Corrupts a given image\n**dstrt@pcat** : Gives a p-corrupted image of a kitten\n**dstrt@apgen** : Generates a random image then ap-corrupts it\n**dstrt@apgens** : ap-Corrupts a given image\n**dstrt@apcat** : Gives an ap-corrupted image of a kitten\n")
+    page1 = [
+        "**dstrt@gen** : Generates a random image then corrupts it",
+        "**dstrt@gens [ATTACH IMAGE]** : Corrupts a given image",
+        "**dstrt@genrepeat [Repeat time]** : Distorts an image a repeated amount of time.",
+        "**dstrt@cat** : Gives a corrupted image of a kitten",
+        "**dstrt@mono** : Generates a random corrupted image in black and white.",
+        "**dstrt@monoo** : Ditto, but with a couple of changes.",
+        "**dstrt@invite** : Gives you an invite link to invite Distort-O-Bot wherever you want."
+    ]
+    page2 = [
+        "**dstrt@pgen** Generates a random image then p-corrupts it",
+        "**dstrt@pgens** : p-Corrupts a given image",
+        "**dstrt@pcat** : Gives a p-corrupted image of a kitten",
+        "**dstrt@apgen** : Generates a random image then ap-corrupts it",
+        "**dstrt@apgens** : ap-Corrupts a given image",
+        "**dstrt@apcat** : Gives an ap-corrupted image of a kitten"
+    ]
+    em.add_field(name="Bot Commands (1)", value="\n".join(page1))
+    em.add_field(name="Bot Commands (2)", value="\n".join(page2))
     await ctx.channel.send(embed=em)
 
 @bot.command()
@@ -194,5 +211,5 @@ async def apgens(ctx):
 async def apcat(ctx):
     apgenerate("placekitten.com")
     await ctx.channel.send(file=discord.File('myimg.jpg'))
-
+    
 bot.run(open("token.txt", "r").read())
