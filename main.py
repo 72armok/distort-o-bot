@@ -8,15 +8,8 @@ from discord.ext import commands
 import random
 import math
 import requests
-import ctypes
 from funcs import *
 # </libraries>
-
-# <novelty>
-
-ctypes.windll.kernel32.SetConsoleTitleW("Distort-O-Bot")
-
-# </novelty>
 
 # <bot>
 
@@ -79,7 +72,8 @@ async def advhelp(ctx):
     page3 = [
         "**spectrum** : This is the default setting",
         "**mono** : Monochrome",
-        "**monoo** : Monochrome+"
+        "**monoo** : Monochrome+",
+        "**det** : kMonochrome"
     ]
     page4 = [
         "**The last argument is the link of the placeholder website if you want a random image, e.g. lorem.picsum**",
@@ -122,6 +116,12 @@ async def adv(ctx, arg, arg1 = "d", arg2 = "spectrum", arg3 = "none"):
         'p' : prev,
         'ap' : aprev
     }
+    filterdict = {
+        'spectrum' : spectrum,
+        'mono' : mmono,
+        'monoo' : mmonoo,
+        'det' : det
+    }
     try:
         if int(arg) > 100 or int(arg) < 1:
             raise
@@ -130,19 +130,12 @@ async def adv(ctx, arg, arg1 = "d", arg2 = "spectrum", arg3 = "none"):
             crt.write(requests.get(ctx.message.attachments[0].url).content)
             crt.close()
         else:
-            generate(arg3)
+            genp(arg3)
         for i in range(int(arg)):
             myimg = Image.open("myimg.jpg").convert('RGB')
             myimg_supreme = myimg.point(specdict[arg1])
             myimg_supreme.save("myimg.jpg")
-        if arg2 == "mono": 
-            i_f = Image.open('myimg.jpg')
-            i_f = i_f.convert('1')
-            i_f.save('myimg.jpg')
-        if arg2 == "monoo":
-            i_f = Image.open('myimg.jpg')
-            i_f = i_f.convert('L')
-            i_f.save('myimg.jpg')
+        filterdict[arg2]()
         await ctx.channel.send(file=discord.File('myimg.jpg'))
     except Exception as exc:
         print(exc)
